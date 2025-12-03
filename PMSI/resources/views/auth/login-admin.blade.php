@@ -1,41 +1,43 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login Admin</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@extends('layouts.auth-split')
 
-<body class="bg-light">
+@section('title', 'Login Administrator')
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 400px">
-
-        <h3 class="text-center mb-3">Login Admin</h3>
-
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
-
-        <form action="{{ route('login.admin.process') }}" method="POST">
-            @csrf
-
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control"
-                       placeholder="Masukkan email" required>
-            </div>
-
-            <div class="mb-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control"
-                       placeholder="Masukkan password" required>
-            </div>
-
-            <button class="btn btn-primary w-100">Login</button>
-        </form>
+@section('content')
+    <div class="mb-8">
+        <span class="text-xs font-bold tracking-widest text-gray-500 uppercase">System Access</span>
+        <h1 class="text-3xl font-bold text-gray-800 mt-2">Administrator</h1>
+        <p class="text-gray-500">Masuk untuk mengelola sistem Haritani.</p>
     </div>
-</div>
 
-</body>
-</html>
+    @if($errors->any())
+        <div class="bg-red-50 text-red-600 px-4 py-3 rounded-lg text-sm mb-4 border border-red-200">
+            {{ $errors->first() }}
+        </div>
+    @endif
+
+    <form action="{{ route('login.admin.process') }}" method="POST" class="space-y-5">
+        @csrf
+
+        <div>
+            <label class="block text-gray-600 font-medium mb-1 text-sm">Email Admin</label>
+            <input type="email" name="email" 
+                   class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#849C26] transition"
+                   placeholder="admin@haritani.com" required>
+        </div>
+
+        <div>
+            <label class="block text-gray-600 font-medium mb-1 text-sm">Password</label>
+            <input type="password" name="password" 
+                   class="w-full bg-gray-50 border border-gray-200 text-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#849C26] transition"
+                   placeholder="••••••••" required>
+        </div>
+
+        <button type="submit" class="w-full bg-gray-800 text-white py-3 rounded-xl font-bold text-lg shadow-md hover:bg-gray-900 transition mt-2">
+            Login Sistem
+        </button>
+    </form>
+@endsection
+
+@section('footer-link')
+    <span class="text-gray-400 text-xs">© 2024 Haritani System</span>
+@endsection

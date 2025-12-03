@@ -4,32 +4,62 @@ namespace App\Http\Controllers;
 
 use App\Models\Pesanan;
 use App\Models\Pembayaran;
+use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class LaporanController extends Controller
 {
-    // Laporan pesanan dan pembayaran sederhana
-    public function laporanPenjualan()
+    // Menu Utama Laporan (Pilih mau laporan apa)
+    public function index()
     {
-        $laporan = Pesanan::with(['konsumen', 'detailPesanan.produk'])
-            ->get()
-            ->map(function ($pesanan) {
-                return [
-                    'id_pesanan' => $pesanan->id_pesanan,
-                    'konsumen' => $pesanan->konsumen->nama_konsumen,
-                    'tanggal' => $pesanan->tanggal_pesanan,
-                    'total_harga' => $pesanan->total_harga,
-                    'produk_dipesan' => $pesanan->detailPesanan->map(function ($d) {
-                        return $d->produk->nama_produk . ' (' . $d->jumlah . ')';
-                    }),
-                ];
-            });
-
-        return response()->json($laporan);
+        return view('laporan.index');
     }
 
+    // Laporan Penjualan (Omset)
+    public function laporanPenjualan(Request $request)
+    {
+        // 1. Cek Siapa yang Login?
+        if (Auth::guard('web')->check()) {
+            // === ADMIN (Bisa lihat semua) ===
+            // Ambil semua pesanan yang statusnya selesai/diproses
+            $laporan = Pesanan::with(['konsumen', 'detailPesanan.produk'])
+                ->orderBy('tanggal_pesan', 'desc')
+                ->get();
+                
+            return view('laporan.penjualan_admin', compact('laporan'));
+
+        } elseif (Auth::guard('penjual')->check()) {
+            // === PENJUAL (Hanya lihat produknya sendiri) ===
+            $idPenjual = Auth::guard('penjual')->id();
+
+            // Query agar Penjual hanya melihat pesanan yang berisi produk dia
+            $laporan = Pesanan::whereHas('detailPesanan.produk', function($q) use ($idPenjual) {
+                $q->where('id_penjual', $idPenjual);
+            })->with(['detailPesanan' => function($q) use ($idPenjual) {
+                // Filter detail pesanan agar yang tampil cuma barang milik dia
+                $q->whereHas('produk', function($sq) use ($idPenjual) {
+                    $sq->where('id_penjual', $idPenjual);
+                })->with('produk');
+            }, 'konsumen'])->get();
+
+            return view('laporan.penjualan_penjual', compact('laporan'));
+        }
+
+        abort(403, 'Anda tidak memiliki akses laporan ini.');
+    }
+
+    // Laporan Pembayaran (Biasanya Khusus Admin Keuangan)
     public function laporanPembayaran()
     {
-        $laporan = Pembayaran::with('pesanan.konsumen')->get();
-        return response()->json($laporan);
+        // Hanya Admin yang boleh lihat rekap pembayaran
+        if (!Auth::guard('web')->check()) {
+            abort(403);
+        }
+
+        $laporan = Pembayaran::with('pesanan.konsumen')
+            ->orderBy('tanggal_pembayaran', 'desc')
+            ->get();
+
+        return view('laporan.pembayaran', compact('laporan'));
     }
 }

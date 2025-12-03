@@ -6,7 +6,11 @@ return [
     |--------------------------------------------------------------------------
     | Authentication Defaults
     |--------------------------------------------------------------------------
+    |
+    | Default guard tetap 'web' (untuk Admin/User biasa).
+    |
     */
+
     'defaults' => [
         'guard' => env('AUTH_GUARD', 'web'),
         'passwords' => env('AUTH_PASSWORD_BROKER', 'users'),
@@ -17,36 +21,30 @@ return [
     | Authentication Guards
     |--------------------------------------------------------------------------
     |
-    | Di sini kita menambahkan dua guard baru:
-    | - penjual
-    | - konsumen
-    |
-    | Keduanya memakai driver "session" sama seperti web.
+    | Di sini kita tentukan siapa saja yang bisa login.
+    | 1. web      -> Untuk ADMIN (Model: User)
+    | 2. penjual  -> Untuk PENJUAL (Model: Penjual)
+    | 3. konsumen -> Untuk KONSUMEN (Model: Konsumen)
     |
     */
 
     'guards' => [
-        // Default Laravel
+        // Guard untuk ADMIN (Tabel Users)
         'web' => [
             'driver' => 'session',
             'provider' => 'users',
         ],
 
-   	'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-	],
-
-        // Guard khusus PENJUAL
+        // Guard untuk PENJUAL
         'penjual' => [
             'driver' => 'session',
-            'provider' => 'penjual',
+            'provider' => 'penjuals', // Perhatikan 's' (plural)
         ],
 
-        // Guard khusus KONSUMEN
+        // Guard untuk KONSUMEN
         'konsumen' => [
             'driver' => 'session',
-            'provider' => 'konsumen',
+            'provider' => 'konsumens', // Perhatikan 's' (plural)
         ],
     ],
 
@@ -55,25 +53,25 @@ return [
     | User Providers
     |--------------------------------------------------------------------------
     |
-    | Kita menambahkan provider untuk model Penjual dan Konsumen.
+    | Menghubungkan Guard dengan Model Database.
     |
     */
 
     'providers' => [
-        // Default Laravel
+        // Provider ADMIN
         'users' => [
             'driver' => 'eloquent',
             'model' => App\Models\User::class,
         ],
 
         // Provider PENJUAL
-        'penjual' => [
+        'penjuals' => [
             'driver' => 'eloquent',
             'model' => App\Models\Penjual::class,
         ],
 
         // Provider KONSUMEN
-        'konsumen' => [
+        'konsumens' => [
             'driver' => 'eloquent',
             'model' => App\Models\Konsumen::class,
         ],
@@ -83,12 +81,29 @@ return [
     |--------------------------------------------------------------------------
     | Resetting Passwords
     |--------------------------------------------------------------------------
+    |
+    | Konfigurasi tabel token untuk fitur Lupa Password.
+    |
     */
 
     'passwords' => [
         'users' => [
             'provider' => 'users',
-            'table' => env('AUTH_PASSWORD_RESET_TOKEN_TABLE', 'password_reset_tokens'),
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'penjuals' => [
+            'provider' => 'penjuals',
+            'table' => 'password_reset_tokens',
+            'expire' => 60,
+            'throttle' => 60,
+        ],
+
+        'konsumens' => [
+            'provider' => 'konsumens',
+            'table' => 'password_reset_tokens',
             'expire' => 60,
             'throttle' => 60,
         ],
@@ -99,6 +114,7 @@ return [
     | Password Confirmation Timeout
     |--------------------------------------------------------------------------
     */
-    'password_timeout' => env('AUTH_PASSWORD_TIMEOUT', 10800),
+
+    'password_timeout' => 10800,
 
 ];

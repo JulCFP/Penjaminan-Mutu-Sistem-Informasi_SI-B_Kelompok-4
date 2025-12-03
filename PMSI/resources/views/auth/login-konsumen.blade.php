@@ -1,41 +1,43 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Login Konsumen</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-</head>
+@extends('layouts.auth-split')
 
-<body class="bg-light">
+@section('title', 'Login Konsumen')
 
-<div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="card shadow p-4" style="width: 400px">
+@section('content')
+    <h1 class="text-3xl font-bold text-gray-800 mb-2">Welcome back!</h1>
+    <p class="text-gray-500 mb-8">Meet the good taste today</p>
 
-        <h3 class="text-center mb-3">Login Konsumen</h3>
+    @if($errors->any())
+        <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative mb-4" role="alert">
+            <span class="block sm:inline">{{ $errors->first() }}</span>
+        </div>
+    @endif
 
-        @if(session('error'))
-            <div class="alert alert-danger">{{ session('error') }}</div>
-        @endif
+    <form action="{{ route('login.konsumen.process') }}" method="POST" class="space-y-5">
+        @csrf
 
-        <form action="{{ route('login.konsumen.process') }}" method="POST">
-            @csrf
+        <div>
+            <label class="block text-gray-600 font-medium mb-1 text-sm">E-mail or phone number</label>
+            <input type="email" name="email" 
+                   class="w-full bg-gray-100 text-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#849C26] transition"
+                   placeholder="Type your e-mail or phone number" required>
+        </div>
 
-            <div class="mb-3">
-                <label>Email</label>
-                <input type="email" name="email" class="form-control"
-                       placeholder="Masukkan email" required>
+        <div>
+            <label class="block text-gray-600 font-medium mb-1 text-sm">Password</label>
+            <input type="password" name="password" 
+                   class="w-full bg-gray-100 text-gray-800 rounded-lg px-4 py-3 focus:outline-none focus:ring-2 focus:ring-[#849C26] transition"
+                   placeholder="Type your password" required>
+            <div class="flex justify-end mt-1">
+                <a href="#" class="text-xs text-gray-400 hover:text-gray-600">Forgot Password?</a>
             </div>
+        </div>
 
-            <div class="mb-3">
-                <label>Password</label>
-                <input type="password" name="password" class="form-control"
-                       placeholder="Masukkan password" required>
-            </div>
+        <button type="submit" class="w-full btn-haritani py-3 rounded-xl font-bold text-lg shadow-md mt-4">
+            Sign In
+        </button>
+    </form>
+@endsection
 
-            <button class="btn btn-info w-100 text-white">Login</button>
-        </form>
-    </div>
-</div>
-
-</body>
-</html>
+@section('footer-link')
+    Don’t have an account? <a href="{{ route('register.konsumen') }}" class="font-bold text-gray-800 hover:underline">Sign Up</a>
+@endsection

@@ -2,43 +2,45 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Konsumen;
+use App\Models\Produk;   // Model Produk (Untuk Dashboard Belanja)
+use App\Models\Konsumen; // Model Konsumen (Untuk Admin Kelola User)
 use Illuminate\Http\Request;
 
 class KonsumenController extends Controller
 {
+    // =================================================================
+    // 1. BAGIAN KONSUMEN (Dashboard Belanja)
+    // =================================================================
+    
+    public function dashboard()
+    {
+        // 1. Ambil 3 Produk Terbaru untuk Banner/Hero
+        $latestProducts = Produk::latest()->take(3)->get();
+
+        // 2. Ambil 6 Produk Acak untuk bagian "Populer"
+        $popularProducts = Produk::inRandomOrder()->with('penjual')->take(6)->get();
+
+        return view('dashboard.konsumen', compact('latestProducts', 'popularProducts'));
+    }
+
+
+    // =================================================================
+    // 2. BAGIAN ADMIN (Kelola Data Konsumen)
+    // =================================================================
+    
+    // Menampilkan daftar semua konsumen untuk Admin
     public function index()
     {
-        return response()->json(Konsumen::all());
+        $konsumen = Konsumen::all();
+        return view('admin.konsumen.index', compact('konsumen'));
     }
 
-    public function store(Request $request)
-    {
-        $validated = $request->validate([
-            'nama_konsumen' => 'required|string|max:255',
-            'alamat' => 'nullable|string',
-            'no_telp' => 'nullable|string|max:20',
-        ]);
-
-        $konsumen = Konsumen::create($validated);
-        return response()->json($konsumen, 201);
-    }
-
-    public function show($id)
-    {
-        return response()->json(Konsumen::findOrFail($id));
-    }
-
-    public function update(Request $request, $id)
-    {
-        $konsumen = Konsumen::findOrFail($id);
-        $konsumen->update($request->all());
-        return response()->json($konsumen);
-    }
-
+    // Menghapus akun konsumen (oleh Admin)
     public function destroy($id)
     {
-        Konsumen::findOrFail($id)->delete();
-        return response()->json(['message' => 'Konsumen berhasil dihapus']);
+        $konsumen = Konsumen::findOrFail($id);
+        $konsumen->delete();
+
+        return redirect()->route('konsumen.index')->with('success', 'Akun konsumen berhasil dihapus.');
     }
 }
