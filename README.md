@@ -8,14 +8,35 @@
 4. Andika Putra "Quality Assurance"
 5. Andi Moh. Rafli "Fullstack Developer"
 
-<h2>
-📝Deskripsi Singkat Sistem Informasi Layanan Penjualan Sayuran "Haritani"
-</h2>
+## 🥗 Mengapa Haritani Dibuat?
 
-<p>
-Website Sistem Informasi Layanan Penjualan Sayuran “Haritani” merupakan sebuah sistem berbasis web yang dirancang untuk membantu proses penjualan 
-dan distribusi sayuran secara digital antara penjual (petani) dan pembeli (konsumen).  Sistem ini dikembangkan untuk 
-mempermudah pengguna dalam melakukan transaksi pembelian sayuran segar. Dalam penerapannya, sistem ini melibatkan tiga peran utama, 
-yaitu <b>Admin</b>, <b>Penjual</b>, dan <b>Konsumen</b>. Admin berfungsi sebagai pengelola Sistem secara keseluruhan, penjual bertugas
-menambahkan serta memperbarui produk yang dijual, sedangkan konsumen dapat melakukan pemesanan dan pembayaran produk yang diinginkan. 
-</p>
+Mendapatkan sayuran segar langsung dari petani seringkali sulit dilakukan karena rantai distribusi yang panjang. *Haritani* hadir untuk memotong jarak tersebut.
+
+Aplikasi ini adalah marketplace sederhana namun powerful yang memungkinkan:
+* *Petani/Penjual* untuk memasarkan hasil panen mereka secara digital tanpa perantara yang rumit.
+* *Konsumen* untuk menikmati kemudahan belanja sayur segar dari rumah, semudah scroll dan klik.
+* *Admin* untuk menjaga ekosistem jual-beli tetap aman dan terorganisir.
+
+Dibangun dengan *Laravel* dan *React*, Haritani bukan hanya soal jualan sayur, tapi soal memberdayakan ekonomi lokal lewat teknologi.
+
+## ✨ Fitur Utama
+
+Sistem Haritani dirancang dengan fitur spesifik untuk memudahkan setiap penggunanya:
+
+### 🥬 Untuk Konsumen (Pembeli)
+* *Smart Catalog:* Melihat daftar sayuran lengkap dengan foto, deskripsi, harga, dan stok real-time.
+* *Pencarian Fleksibel:* Cari sayuran berdasarkan nama, kategori, atau rentang harga sesuai budget.
+* *Keranjang & Checkout:* Kelola pesanan di keranjang dan konfirmasi pembayaran dengan mudah.
+* *Order Tracking:* Pantau status pesanan dari diproses hingga dikirim.
+
+### 🏪 Untuk Distributor (Penjual)
+* *Manajemen Produk:* Tambah, perbarui, atau hapus produk sayuran serta atur stok dan harga.
+* *Proses Pesanan:* Terima pesanan masuk dan update status pengiriman ke pembeli.
+* *Laporan Penjualan:* Akses riwayat transaksi dan lihat statistik penjualan per periode.
+
+### 🛡 Untuk Admin
+* *Verifikasi Mitra:* Memvalidasi pendaftaran distributor/penjual baru untuk menjaga keamanan sistem.
+* *User Management:* Mengelola seluruh akun pengguna (Pembeli & Penjual).
+* *Monitoring Sistem:* Memantau aktivitas transaksi dan menangani komplain jika ada masalah.
+
+---
