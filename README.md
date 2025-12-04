@@ -40,3 +40,14 @@ Sistem Haritani dirancang dengan fitur spesifik untuk memudahkan setiap pengguna
 * *Monitoring Sistem:* Memantau aktivitas transaksi dan menangani komplain jika ada masalah.
 
 ---
+
+### 🎨 Ui/Ux Figma
+<img width="1440" height="950" alt="log in" src="https://github.com/user-attachments/assets/2d421b69-8d20-4665-8ec4-a93a0a1e75bc" />
+<img width="1440" height="950" alt="Create account" src="https://github.com/user-attachments/assets/2297e24e-76ae-4d81-a149-e15da05bf8c6" />
+<img width="1440" height="3974" alt="Home" src="https://github.com/user-attachments/assets/4bcf4e62-11e6-4536-84a9-d749b952283a" />
+<img width="1440" height="4280" alt="products" src="https://github.com/user-attachments/assets/94628163-5e78-4dc4-a05f-d215dfe2cb16" />
+<img width="1440" height="2896" alt="product info" src="https://github.com/user-attachments/assets/5a4f094a-c47e-4d5e-a285-4cde46d8c8d1" />
+<img width="1440" height="1112" alt="filter" src="https://github.com/user-attachments/assets/d9f06f35-55e5-4c8c-a0d4-db2f059e6d4c" />
+<img width="1440" height="779" alt="cart" src="https://github.com/user-attachments/assets/91415f00-29d7-4b66-8a4a-67926d40ca3f" />
+<img width="1440" height="1491" alt="payment" src="https://github.com/user-attachments/assets/c45fea1e-e213-46a7-acde-2ba807f8a8ef" />
+<img width="1440" height="819" alt="payment Done" src="https://github.com/user-attachments/assets/d1fcea58-38fd-4315-9215-6af0748a1cd6" />
